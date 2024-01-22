@@ -1,0 +1,178 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 33
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| college            |
+| colllege           |
+| ghrcem             |
+| hm                 |
+| hospital           |
+| info               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| playground         |
+| sakila             |
+| student            |
+| sys                |
+| university         |
+| world              |
+| xyz                |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> create database Hospital;
+
+mysql> desc patients;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| patientId  | int         | NO   | PRI | NULL    |       |
+| firstname  | varchar(20) | YES  |     | NULL    |       |
+| Gender     | varchar(20) | YES  |     | NULL    |       |
+| Department | varchar(50) | YES  |     | NULL    |       |
+| Email      | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from patients;
+Empty set (0.00 sec)
+
+mysql> insert into patients values(1,"Ram","M","Cardio","ram@gmail.com");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into patients values(2,"Shyam","M","Patho","shy@gmail.com"), (3,"Radha","F","Neuro","ra@gmail.com"),(4,"Yash","M","Patho","ya@gmail.com");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from patients;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         1 | Ram       | M      | Cardio     | ram@gmail.com |
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
+|         3 | Radha     | F      | Neuro      | ra@gmail.com  |
+|         4 | Yash      | M      | Patho      | ya@gmail.com  |
++-----------+-----------+--------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> update patients
+    -> set firstname="kalyani"
+    -> where patientId=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from patients;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         1 | Ram       | M      | Cardio     | ram@gmail.com |
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
+|         3 | kalyani   | F      | Neuro      | ra@gmail.com  |
+|         4 | Yash      | M      | Patho      | ya@gmail.com  |
++-----------+-----------+--------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(patientId) from patients;
++------------------+
+| count(patientId) |
++------------------+
+|                4 |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> delete from patients where firstname = 'Ram';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from patients;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
+|         3 | kalyani   | F      | Neuro      | ra@gmail.com  |
+|         4 | Yash      | M      | Patho      | ya@gmail.com  |
++-----------+-----------+--------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(patientId) from patients;
++------------------+
+| count(patientId) |
++------------------+
+|                3 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from patients where patientId = 2;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
++-----------+-----------+--------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select min(patientId) from patients;
++----------------+
+| min(patientId) |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(patientId) from patients;
++----------------+
+| avg(patientId) |
++----------------+
+|         3.0000 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from patients;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
+|         3 | kalyani   | F      | Neuro      | ra@gmail.com  |
+|         4 | Yash      | M      | Patho      | ya@gmail.com  |
++-----------+-----------+--------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table patients add constraint new unique key(Email);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc patients;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| patientId  | int         | NO   | PRI | NULL    |       |
+| firstname  | varchar(20) | YES  |     | NULL    |       |
+| Gender     | varchar(20) | YES  |     | NULL    |       |
+| Department | varchar(50) | YES  |     | NULL    |       |
+| Email      | varchar(50) | YES  | UNI | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from patients;
++-----------+-----------+--------+------------+---------------+
+| patientId | firstname | Gender | Department | Email         |
++-----------+-----------+--------+------------+---------------+
+|         2 | Shyam     | M      | Patho      | shy@gmail.com |
+|         3 | kalyani   | F      | Neuro      | ra@gmail.com  |
+|         4 | Yash      | M      | Patho      | ya@gmail.com  |
++-----------+-----------+--------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>
